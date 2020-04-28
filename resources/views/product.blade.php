@@ -20,11 +20,21 @@
   <tbody>
     @php
     $Number = 0;
+    $start = 1;
+    $end = $limit < count($data) ? $limit : count($data);
     @endphp
     @if( $data->currentPage() > 1)
       @php
       $Number = $limit * ($data->currentPage() - 1);
+      $start = $limit * ($data->currentPage()-1) + 1;
+      $end = $start + ($limit-1);
       @endphp
+
+      @if( $end >= $data->total())
+        @php
+          $end = $data->total();
+        @endphp
+        @endif
       @endif
      @foreach( $data as $key => $value )
     <tr>
@@ -41,7 +51,7 @@
   </tbody>
   <tfoot class="table table-striped">
     <tr>
-    <th colspan="5"> แสดงข้อมูลจำนวน  ถึง  จาก  รายการ</th>
+    <th colspan="5"> แสดงข้อมูลจำนวน {{ $start }} ถึง {{ $end }} จาก {{ $data->total() }} รายการ</th>
     </tr>
   </tfoot>
 </table>
