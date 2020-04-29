@@ -18,6 +18,9 @@ Route::get('/', function () {
 Route::resource('/product', 'ProductController'); //สร้างเส้นทางการทำงานของ Product
 Route::get('/product/{id}/delete' , 'ProductController@delete'); //ลบข้อมูล
 
+Route::resource('/producttype', 'ProductTypeController'); //สร้างเส้นทางการทำงานของ ProductType
+Route::get('/producttype/{id}/delete' , 'ProductTypeController@delete'); //ลบข้อมูล
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

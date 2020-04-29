@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-  <h3 class="text-center">จัดการข้อมูลสินค้า</h3>
+  <h3 class="text-center">จัดการข้อมูลประเภทสินค้า</h3>
   <div class="clearfix mb-2">
     <div class="float-left">
            <form method="GET" class="form-inline">
@@ -23,12 +23,12 @@
               </div>
                <div class="form-group">
                    <label for="search" class="sr-only">Search</label>
-                   <input type="text" class="form-control" id="search" name="search" placeholder="ค้นหา ชื่อสินค้า" value="{{ !empty($_GET['search']) ? $_GET['search'] : '' }}">
+                   <input type="text" class="form-control" id="search" name="search" placeholder="ค้นหา ชื่อประเภทสินค้า" value="{{ !empty($_GET['search']) ? $_GET['search'] : '' }}">
 </div>
               <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> ค้นหา</button>
             </form>
         </div>
-  <a href="{{ url('product/create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> เพิ่มข้อมูลสินค้า</a>
+  <a href="{{ url('producttype/create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> เพิ่มข้อมูลประเภทสินค้า</a>
 
 </div>
   <table class="table table-striped">
@@ -36,39 +36,37 @@
     <tr>
       <th scope="col">ลำดับ</th>
       <th scope="col">ชื่อสินค้า</th>
-      <th scope="col">ราคา</th>
       <th scope="col">แก้ไขล่าสุด</th>
       <th scope="col">จัดการ</th>
     </tr>
   </thead>
   <tbody>
     @php
-    $Number = 0;
-    $start = 1;
-    $end = $limit < count($data) ? $limit : count($data);
-    @endphp
-    @if( $data->currentPage() > 1)
-      @php
-      $Number = $limit * ($data->currentPage() - 1);
-      $start = $limit * ($data->currentPage()-1) + 1;
-      $end = $start + ($limit-1);
-      @endphp
-
-      @if( $end >= $data->total())
-        @php
-          $end = $data->total();
+        $Number = 0;
+        $start = 1;
+        $end = $limit < count($data) ? $limit : count($data);
         @endphp
-        @endif
-      @endif
+        @if( $data->currentPage() > 1)
+          @php
+          $Number = $limit * ($data->currentPage() - 1);
+          $start = $limit * ($data->currentPage()-1) + 1;
+          $end = $start + ($limit-1);
+          @endphp
+
+          @if( $end >= $data->total())
+            @php
+              $end = $data->total();
+            @endphp
+            @endif
+          @endif
      @foreach( $data as $key => $value )
     <tr>
       <th class="text-center">{{ $Number + $loop->iteration }}</th>
       <td >{{ $value->name }}</td>
-      <td class="text-center">{{ number_format($value->price) }} บาท</td>
       <td class="text-center">{{ $value->created_at }}</td>
       <td class="text-center">
-        <a href="{{ action('ProductController@edit', $value->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> แก้ไข</a>
-        <a href="{{ action('ProductController@delete', $value->id) }}" onclick="return confirm('ลบ ?')" class="btn btn-danger"><i class="fa fa-trash"></i> ลบ</a>
+        <a href="{{ action('ProductTypeController@edit', $value->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> แก้ไข</a>
+        <a href="{{ action('ProductTypeController@delete', $value->id) }}" onclick="return confirm('ลบ ?')" class="btn btn-danger"><i class="fa fa-trash"></i> ลบ</a>
       </td>
     </tr>
     @endforeach
