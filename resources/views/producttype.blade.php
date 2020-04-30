@@ -63,7 +63,7 @@
     <tr>
       <th class="text-center">{{ $Number + $loop->iteration }}</th>
       <td >{{ $value->name }}</td>
-      <td class="text-center">{{ $value->created_at }}</td>
+      <td class="text-center">{{ date('d-M-Y H:i:s', strtotime($value->updated_at)) }}</td>
       <td class="text-center">
         <a href="{{ action('ProductTypeController@edit', $value->id) }}" class="btn btn-warning"><i class="fa fa-edit"></i> แก้ไข</a>
         <a href="{{ action('ProductTypeController@delete', $value->id) }}" onclick="return confirm('ลบ ?')" class="btn btn-danger"><i class="fa fa-trash"></i> ลบ</a>
@@ -73,12 +73,14 @@
   </tbody>
   <tfoot class="table table-striped">
     <tr>
-    <th colspan="5"> แสดงข้อมูลจำนวน {{ $start }} ถึง {{ $end }} จาก {{ $data->total() }} รายการ</th>
+    <th colspan="5"> แสดงข้อมูลจำนวน {{ $start }} ถึง {{ $end }} จาก {{ $data->total() }} รายการ
+      <div class="float-right">
+      {{ $data->appends(request()->query())->links() }}
+      </div>
+    </th>
     </tr>
   </tfoot>
 </table>
-<div class="float-right">
-{{ $data->appends(request()->query())->links() }}
-</div>
+
 </div>
 @endsection

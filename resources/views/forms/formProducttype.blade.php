@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <h3 class="text-center">{{ !empty($data->id) ? "แก้ไข" : "เพิ่ม" }}ข้อมูลประเภทสินค้า</h3>
-  @if (count($errors) > 0)
+  <!-- @if (count($errors) > 0)
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <ul>
             @foreach($errors->all() as $error )
@@ -14,7 +14,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
       </div>
-  @endif
+  @endif -->
 
   @if( !empty($data->id) )
   <form method="POST" action="{{ action('ProductTypeController@update', $data->id) }}" enctype="multipart/form-data">
@@ -26,7 +26,10 @@
 @csrf
   <div class="form-group">
     <label for="name">ชื่อประเภทสินค้า</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อประเภทสินค้า" value="{{ !empty($data->name) ? $data->name: old('name') }}">
+    <input type="text" class="form-control {{ !empty($errors->first('name')) ? 'is-invalid' : '' }}" id="name" name="name" placeholder="ชื่อประเภทสินค้า" value="{{ !empty($data->name) ? $data->name: old('name') }}">
+    @if( !empty($errors->first('name')) )
+    <message class="text-danger">- {{ $errors->first('name') }}</message>
+    @endif
   </div>
 
   <div class="clearfix text-center">

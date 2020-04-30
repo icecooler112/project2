@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -39,14 +39,11 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{{ url('/product') }}">ข้อมูลสินค้า</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/producttype') }}">ประเภทสินค้า</a>
+                      </li>
                     </ul>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav mr-auto">
-                          <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/producttype') }}">ประเภทสินค้า</a>
-                          </li>
-                        </ul>
+                    
 
 
                     <!-- Right Side Of Navbar -->
@@ -93,6 +90,13 @@
     </script>
     @endif
     <!-- End Alertt -->
+
+    <script>
+      $(".form-group").change(function(){
+        $(this).find('.is-invalid').removeClass('is-invalid');
+        $(this).find('message').remove();
+      });
+    </script>
     </div>
 </body>
 </html>
