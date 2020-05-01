@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductModel AS PM; //เรียก ProductModel มาใช้ใน Controller นี้
 use App\Models\ProductTypeModel AS PTM; //เรียก ProductModel มาใช้ใน Controller นี้
+use App\Models\Storemodel AS SM;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -13,18 +14,20 @@ class ProductController extends Controller
 {
   protected $cValidator = [
     'type' => 'required',
+    'store' => 'required',
     'name' => 'required|min:3|max:255',
-    'detail' => 'required|min:2',
+    'detail' => 'required|min:1',
     'price' => 'required|numeric|digits_between:1,9'
   ];
 
   protected $cValidatorMsg = [
     'type.required' => 'กรุณาเลือกประเภทสินค้า',
+    'store.required' => 'กรุณาเลือกร้านค้า',
     'name.required' => 'กรุณากรอกชื่อสินค้า',
     'name.min' => 'ชื่อสินค้าต้องมีอย่างน้อย 3 ตัวอักษร',
     'name.max' => 'ชื่อสินค้าต้องมีไม่เกิน 255 ตัวอักษร',
     'detail.required' => 'กรุณากรอกรายละเอียดสินค้า',
-    'detail.min' => 'รายละเอียดสินค้าต้องมีอย่างน้อย 2 ตัวอักษร',
+    'detail.min' => 'รายละเอียดสินค้าต้องมีอย่างน้อย 1 ตัวอักษร',
     'price.required' => 'กรุณากรอกราคาสินค้า',
     'price.numeric' => 'กรุณากรอกราคาสินค้าเป็นตัวเลข 0-9 เท่านั้น',
     'price.digits_between' => 'สามารถกรอกราคาสินค้าได้ตั้งแต่ 1 ตัวเลขขึ้นไป แต่ไม่เกิน 9 ตัวเลข'
@@ -39,7 +42,7 @@ class ProductController extends Controller
     {
       $request->limit = !empty($request->limit) ? $request->limit : $this->limit;
       $data = $pm->lists( $request );
-      return view('product')->with( ["data"=>$data, "limit"=>$request->limit, "type"=>PTM::get() ] );
+      return view('product')->with( ["data"=>$data, "limit"=>$request->limit, "type"=>PTM::get(), "store"=>SM::get()  ] );
 
     }
 
@@ -50,7 +53,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('forms.formProduct')->with( 'type', PTM::get() );
+        return view('forms.formProduct')->with( 'type', PTM::get() )->with( 'store', SM::get() );
     }
 
     /**
@@ -106,7 +109,7 @@ class ProductController extends Controller
       if( is_null($data) ){
         return back()->with('jsAlert', "ไม่พบข้อมูลที่ต้องการแก้ไข");
       }
-      return view('forms.formProduct')->with( ['data'=>$data, 'type'=>PTM::get() ] );
+      return view('forms.formProduct')->with( ['data'=>$data, 'type'=>PTM::get(), 'store'=>SM::get()  ] );
     }
 
     /**

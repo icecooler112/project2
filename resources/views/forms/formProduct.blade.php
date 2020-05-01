@@ -25,6 +25,29 @@
 
 @csrf
 <div class="form-group">
+    <label for="type">ร้านค้า</label>
+    <select class="form-control {{ !empty($errors->first('store')) ? 'is-invalid' : '' }}" name="store" id="store">
+      <option value="">-เลือกร้านค้า-</option>
+      @foreach( $store AS $key => $value )
+        @php
+          $sel = '';
+        @endphp
+        @if( !empty($data->store) )
+            @if( $value->name == $data->store )
+              @php
+                  $sel = 'selected="1"';
+              @endphp
+            @endif
+          @endif
+      <option {{ $sel }} value="{{ $value->name }}">{{ $value->name }}</option>
+      @endforeach
+    </select>
+    @if( !empty($errors->first('store')) )
+    <message class="text-danger">- {{ $errors->first('store') }}</message>
+  @endif
+  </div>
+
+<div class="form-group">
     <label for="type">ประเภทสินค้า</label>
     <select class="form-control {{ !empty($errors->first('type')) ? 'is-invalid' : '' }}" name="type" id="type">
       <option value="">-เลือกประเภทสินค้า-</option>

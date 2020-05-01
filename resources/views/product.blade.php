@@ -23,6 +23,30 @@
               </div>
               <div class="form-group">
                   <label for="type"></label>
+                  <select class="form-control" name="store" id="store">
+                    <option value=""hidden>-เลือกร้านค้า-</option>
+                    @foreach( $store AS $key => $value )
+                      @php
+                        $sel = '';
+                      @endphp
+                      @if( !empty($data->name) )
+                          @if( $value->name == $data->name )
+                            @php
+                                $sel = 'selected="1"';
+                            @endphp
+                          @endif
+                        @endif
+                        @if( $value->name == old('name') )
+                          @php
+                            $sel = 'selected="1"';
+                          @endphp
+                        @endif
+                    <option {{ $sel }} value="{{ $value->name }}">{{ $value->name }}</option>
+                    @endforeach
+                    </select>
+                  </div>
+              <div class="form-group">
+                  <label for="type"></label>
                   <select class="form-control" name="type" id="type">
                     <option value=""hidden>-เลือกประเภทสินค้า-</option>
                     @foreach( $type AS $key => $value )
@@ -92,6 +116,8 @@
       <td class="text-center">
         @if( !empty($value->img) )
         <img src="{{ asset('storage/'.$value->img) }}" style="width: 80px; height: auto;">
+        @else
+        <img src="{{ asset('storage/images/1.jpg') }}" style="width: 80px; height: auto;">
         @endif
       </td>
       <!-- <td class="text-center">{{ $value->typename }}</td> -->

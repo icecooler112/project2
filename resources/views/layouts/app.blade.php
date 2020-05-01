@@ -42,8 +42,11 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{{ url('/producttype') }}">ประเภทสินค้า</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/store') }}">ร้านค้า</a>
+                      </li>
                     </ul>
-                    
+
 
 
                     <!-- Right Side Of Navbar -->

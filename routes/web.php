@@ -21,6 +21,9 @@ Route::get('/product/{id}/delete' , 'ProductController@delete'); //ลบข้�
 Route::resource('/producttype', 'ProductTypeController'); //สร้างเส้นทางการทำงานของ ProductType
 Route::get('/producttype/{id}/delete' , 'ProductTypeController@delete'); //ลบข้อมูล
 
+Route::resource('/store', 'StoreController'); //สร้างเส้นทางการทำงานของ ProductType
+Route::get('/store/{id}/delete' , 'StoreController@delete'); //ลบข้อมูล
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
